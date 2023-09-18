@@ -1,13 +1,8 @@
 use clearscreen;
-use itertools::{CombinationsWithReplacement, Itertools};
+use itertools::Itertools;
 use rand::Rng;
 use std::thread::sleep;
-use std::time::{Duration, Instant};
-
-enum Status {
-    Save = 1,
-    Dead = 0,
-}
+use std::time::Duration;
 
 struct LifeGame {
     H: usize,
@@ -80,8 +75,8 @@ impl LifeGame {
 }
 
 fn main() {
-    let H: usize = 30;
-    let W: usize = 50;
+    let H: usize = 40;
+    let W: usize = 100;
     let mut game = LifeGame::new(H, W);
     // let penta = vec![
     //     "oooooooo".chars().collect_vec(),
@@ -94,14 +89,17 @@ fn main() {
     //     }
     // }
     game.init_random();
-
+    clearscreen::clear().unwrap();
     let mut gen = 0;
+    println!("generation: {}", gen);
+    game.show();
+    sleep(Duration::from_secs(3));
     loop {
+        clearscreen::clear().unwrap();
         println!("generation: {}", gen);
         game.show();
         game.update();
-        sleep(Duration::from_millis(100));
-        clearscreen::clear().unwrap();
+        sleep(Duration::from_millis(50));
         gen += 1;
     }
 }
