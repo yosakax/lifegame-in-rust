@@ -38,10 +38,17 @@ impl LifeGame {
         let dy = [0, 1, 0, -1, 1, -1, 1, -1];
         let mut cnt = 0;
         for i in 0..8 {
-            let nx = x as isize + dx[i];
-            let ny = y as isize + dy[i];
-            if !(0 <= nx && nx < self.H as isize && 0 <= ny && ny < self.W as isize) {
-                continue;
+            let mut nx = x as isize + dx[i];
+            let mut ny = y as isize + dy[i];
+            if nx < 0 {
+                nx = self.H as isize - 1;
+            } else if nx == self.H as isize {
+                nx = 0;
+            }
+            if ny < 0 {
+                ny = self.W as isize - 1;
+            } else if ny == self.W as isize {
+                ny = 0;
             }
             let nx = nx as usize;
             let ny = ny as usize;
@@ -75,8 +82,8 @@ impl LifeGame {
 }
 
 fn main() {
-    let H: usize = 40;
-    let W: usize = 100;
+    let H: usize = 45;
+    let W: usize = 170;
     let mut game = LifeGame::new(H, W);
     // let penta = vec![
     //     "oooooooo".chars().collect_vec(),
